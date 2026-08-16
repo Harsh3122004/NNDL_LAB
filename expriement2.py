@@ -1,39 +1,40 @@
+# Gradient Descent Implementation for Linear Regression
 import numpy as np
 import matplotlib.pyplot as plt
+x = np.array([1,2,3,4,5])
+y = np.array([10,40,50,78,83])
 
-x = np.array([1, 2, 3, 4, 5])
-y = np.array([10, 40, 50, 78, 83])
+m = np.random.rand(1)
+c = np.zeros(1)
+lr = 0.01
+epochs = 10
+for epoch in range(epochs):
 
+    y_pred = m * x + c
 
-m = 0
-b = 0
+    loss = np.mean(np.square(y_pred - y))
 
-learning_rate = 0.01
-epochs = 1000
-n = len(x)
+    error = y_pred - y
+    dm = 2 * np.mean(error * x)
+    dc = 2 * np.mean(error)
 
+    m -= lr * dm
+    c -= lr * dc
 
-for i in range(epochs):
-    y_pred = m * x + b
+print('Final slope (m):', m[0])
+print('Final intercept (c):', c[0])
 
-    dm = (-2/n) * np.sum(x * (y - y_pred))
-    db = (-2/n) * np.sum(y - y_pred)
+# Graph Plotting
+plt.scatter(x, y, label='Actual Data')
 
-    m = m - learning_rate * dm
-    b = b - learning_rate * db
+x_line = np.linspace(x.min()-1, x.max()+1, 100)
+y_line = m * x_line + c
 
-    if i % 100 == 0:
-        loss = np.mean((y - y_pred) ** 2)
-        print(f"Epoch {i}: Loss = {loss:.4f}, m = {m:.4f}, b = {b:.4f}")
+plt.plot(x_line, y_line, color='red', label='Regression Line')
 
-print("\nFinal parameters:")
-print("Slope (m):", m)
-print("Intercept (b):", b)
-
-
-plt.scatter(x, y, color='blue', label='Data points')
-plt.plot(x, m*x + b, color='red', label='Fitted line')
-plt.xlabel('x')
-plt.ylabel('y')
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("y = mx + c")
 plt.legend()
+plt.grid()
 plt.show()
