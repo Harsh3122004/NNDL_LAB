@@ -7,7 +7,7 @@ y = np.array([10,40,50,78,83])
 m = np.random.rand(1)
 c = np.zeros(1)
 lr = 0.01
-epochs = 10
+epochs = 1000
 for epoch in range(epochs):
 
     y_pred = m * x + c
